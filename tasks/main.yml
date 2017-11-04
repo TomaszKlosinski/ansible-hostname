@@ -1,0 +1,15 @@
+---
+
+- name: set the hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+  when: "ansible_hostname != inventory_hostname"
+
+- name: update /etc/hostname
+  copy:
+    content: "{{ inventory_hostname }}{{'\n'}}"
+    dest: /etc/hostname
+    owner: root
+    group: root
+    mode: 0644
+  when: "ansible_hostname != inventory_hostname"
